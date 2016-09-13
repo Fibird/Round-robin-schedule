@@ -8,8 +8,13 @@ using namespace std;
 int main()
 {
     int k = N;
-    int sche = pow(2, k);      // divide the problem to pow(2, k) subproblems
-    int arr[sche][sche];
+    int sche = pow(2.0, k);      // divide the problem to pow(2, k) subproblems
+    int **arr;
+    arr = new int*[sche];
+    for (int i = 0; i < sche; i++)
+    {
+        arr[i] = new int[sche];
+    }
     // inits the array with 0 and gives 1 to 8 to line 1
     for (int i = 0; i < sche; i++)
     {
@@ -29,14 +34,14 @@ int main()
     {
         // gets the size of the problem,
         // every loop the problem will triple
-        int m_size = pow(2, j);
-        for (int r = 0; r < pow(2, j); r++)
+        int m_size = pow(2.0, j);
+        for (int r = 0; r < m_size; r++)
         {
             for (int c = 0; c < sche; c++)
             {
                 // uses round to get the index of problem block
                 int bid = (c + m_size) / m_size;
-                int c_offset = pow(-1, bid + 1) * m_size;
+                int c_offset = pow(-1.0, bid + 1) * m_size;
                 int r_offset = m_size;
                 arr[r + r_offset][c + c_offset] = arr[r][c];
             }
@@ -51,6 +56,10 @@ int main()
         }
         cout << endl;
     }
-
+    for (int i = 0; i < sche; i++)
+    {
+        delete arr[i];
+    }
+    delete arr;
     return 0;
 }
