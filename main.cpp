@@ -48,13 +48,19 @@ int main()
         }
     }
     // outputs the schedule of the round robin
+    cout << "N\\D\t";
+    for (int i = 0; i < sche - 1; i++)
+    {
+        cout << i + 1 << "\t";
+    }
+    cout << "\n";
     for (int i = 0; i < sche; i++)
     {
         for (int j = 0; j < sche; j++)
         {
             cout << arr[i][j] << "\t";
         }
-        cout << endl;
+        cout << "\n";
     }
     for (int i = 0; i < sche; i++)
     {
