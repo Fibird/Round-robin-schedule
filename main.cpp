@@ -32,25 +32,9 @@ int main()
         {
             for (int c = 0; c < sche; c++)
             {
-                int m = 0;
+                int m = (c + m_size) / m_size;
 
-                if (m_size == 1)
-                {
-                    m = c;
-                }
-                else
-                {
-                    if ((c + 1) % 2 == 0)
-                    {
-                        m = c / m_size;
-                    }
-                    else
-                    {
-                        m = (c + 1) / m_size;
-                    }
-                }
-
-                int c_offset = pow(-1, m) * m_size;
+                int c_offset = pow(-1, m + 1) * m_size;
                 int r_offset = m_size;
                 arr[r + r_offset][c + c_offset] = arr[r][c];
             }
