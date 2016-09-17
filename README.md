@@ -17,10 +17,10 @@
 
 2^1个选手的比赛日程表
 
-![second-time](http://i1.piimg.com/567571/b40679ee52cf02b1.jpg)
+![second-time](https://github.com/Sunlcy/Round-robin-schedule/blob/master/pictures/second-time.jpg)
 
 2^2个选手的比赛日程表
 
-![third-time](http://i2.buimg.com/567571/0b1effa313cf26eb.jpg)
+![third-time](https://github.com/Sunlcy/Round-robin-schedule/blob/master/pictures/third-time.jpg)
 
 2^3个选手的比赛日程表
