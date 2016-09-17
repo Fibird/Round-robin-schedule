@@ -13,7 +13,7 @@
 
 根据分治法的思想，递归地将问题一分为二，直到只剩下两个人比赛，最后在将这些问题合并起来，这样问题就变得十分简单。日程表的制定过程中存在一定的规律，即第i行第j列表示第i个选手在第j天所遇到的选手。这样算法就很容易实现了。
 
-![first-time](http://i1.piimg.com/567571/c4244944c4fde26c.jpg)
+![first-time](https://github.com/Sunlcy/Round-robin-schedule/blob/master/pictures/first-time.jpg)
 
 2^1个选手的比赛日程表
 
