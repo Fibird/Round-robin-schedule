@@ -44,22 +44,22 @@ int sche = pow(2.0, N);      // divide the problem to pow(2, k) subproblems
 ...
 
 for (int j = 0; j < N; j++)
-{
-    // gets the size of the problem,
-    // every loop the problem will double
-    m_size = pow(2.0, j);
-    for (int r = 0; r < m_size; r++)
     {
-        for (int c = 0; c < sche; c++)
+        // gets the size of the problem,
+        // every loop the problem will triple
+        bw = pow(2.0, j);
+        for (int r = 0; r < bw; r++)
         {
-            // uses round to get the index of problem block
-            bid = (c + m_size) / m_size;
-            c_offset = pow(-1.0, bid + 1) * m_size;
-            r_offset = m_size;
-            arr[r + r_offset][c + c_offset] = arr[r][c];
+            for (int c = 0; c < sche; c++)
+            {
+                // uses round to get the index of problem block
+                bid = (c + bw) / bw;
+                c_offset = pow(-1.0, bid + 1) * bw;
+                r_offset = bw;
+                arr[r + r_offset][c + c_offset] = arr[r][c];
+            }
         }
     }
-}
 ```
 
 代码中使用了三层循环，最外层的循环控制问题的规模，即当j=0时，问题规模最小，即前面介绍的规模为2^1的问题；当j=1时，问题规模为2^2；当j=2时，问题规模为2^3……以此类推。这部分可以最能体现分治法的特点，将大问题划分为小问题。
@@ -78,13 +78,48 @@ for (int j = 0; j < N; j++)
       a[0][n-1]-->a[0+2^0][(n-1)+2^0]
       a[0][n]-->a[0+2^0][n-2^0]
 
+也就是说当元素的列ID(ID=列号+1)为奇数时，移动到右下角(横纵坐标分别加2^0)；当列ID为偶数时，移动到左下角(横坐标减2^0，纵坐标加2^0)。
+
 - 子问题规模为2^2(j=1)时，
 
       a[0][0]-->a[2][2]
-      a[0][1]-->a[1][0]
+      a[0][1]-->a[2][3]
+      a[0][2]-->a[2][0]
+      a[0][3]-->a[2][1]
       ...
-      a[0][n-1]-->a[1][n]
-      a[0][n]-->a[0+1][n-1]
+      a[0][n-3]-->a[0][(n-3)+2^1]
+      a[0][n-2]-->a[0][(n-2)+2^1]
+      a[0][n-1]-->a[0+2^1][(n-1)-2^1]
+      a[0][n]-->a[0+2^1][n-2^1]
 
+现在规律就没有那么明显了，但是如果我们按照整块来找规律的话，那么规律就相对容易找一些。你可以这样划分块：即按照2x2的块来划分，每个块都对应一个ID，同样当ID为奇数时，移动到右下角(横纵坐标分别加2^1)；当ID为偶数时，移动到左下角(横坐标减2^1，纵坐标加2^1)。
 
-readme尚未完成，请耐心等待
+**NOTE:**其实问题规模为2^1时，块的大小为1x1。
+
+- 当子问题规模为2^3(j=2)时，
+
+      a[0][0]-->a[4][4]
+      ...
+      a[0][2]-->a[4][6]
+      ...
+      a[0][4]-->a[4][0]
+      ...
+      a[0][7]-->a[4][3]
+
+很显然，这里块的大小为4x4，移动的方法我这里也就不在赘述了。
+
+总上所述，块的大小分别是2^0x2^0，2^1x2^1，2^2x2^x,...,2^nx2^n，每次都按照块来进行对角线复制，这时规律就显而易见了。但是还有一个比较棘手的问题——如何将数组中的每个元素与块的ID一一映射呢？我经过一番思考终于找到了规律：
+
+**BLOCK_ID = (COL_ID + BLOCK_WIDTH - 1)/BLOCK_WIDTH**
+
+其中`COL_ID`为数组元素的列数(从0开始)加1，`BLOCK_WIDTH`为块宽度(2^n)。
+
+代码中是这样写的:
+
+      bid = (c + bw) / bw;
+
+由于`COL_ID=c+1`，故前后的1被抵消掉了。
+
+**NOTE:**其实这个式子的灵感来自于我最近在学的CUDA编程的一个经典例子:smile:。
+
+到这里，所有的问题都解决了。

@@ -9,7 +9,7 @@ int main()
 {
     int sche = pow(2.0, N);      // divide the problem to pow(2, k) subproblems
     int **arr;
-    int m_size, bid;
+    int bw, bid;
     int c_offset, r_offset;
 
     // allocate memory for array
@@ -29,15 +29,15 @@ int main()
     {
         // gets the size of the problem,
         // every loop the problem will triple
-        m_size = pow(2.0, j);
-        for (int r = 0; r < m_size; r++)
+        bw = pow(2.0, j);
+        for (int r = 0; r < bw; r++)
         {
             for (int c = 0; c < sche; c++)
             {
                 // uses round to get the index of problem block
-                bid = (c + m_size) / m_size;
-                c_offset = pow(-1.0, bid + 1) * m_size;
-                r_offset = m_size;
+                bid = (c + bw) / bw;
+                c_offset = pow(-1.0, bid + 1) * bw;
+                r_offset = bw;
                 arr[r + r_offset][c + c_offset] = arr[r][c];
             }
         }
