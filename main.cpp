@@ -9,7 +9,8 @@ int main()
 {
     int sche = pow(2.0, N);      // divide the problem to pow(2, k) subproblems
     int **arr;
-    int bw, bid;
+    int bw = 1;     // the width of block
+    int bid;        // the ID of block
     int c_offset, r_offset;
 
     // allocate memory for array
@@ -27,9 +28,6 @@ int main()
 
     for (int j = 0; j < N; j++)
     {
-        // gets the size of the problem,
-        // every loop the problem will triple
-        bw = pow(2.0, j);
         for (int r = 0; r < bw; r++)
         {
             for (int c = 0; c < sche; c++)
@@ -41,7 +39,9 @@ int main()
                 arr[r + r_offset][c + c_offset] = arr[r][c];
             }
         }
+        bw = bw * 2;      // every loop the problem will double
     }
+
     // outputs the schedule of the round robin
     cout << "N\\D\t";
     for (int i = 0; i < sche - 1; i++)
@@ -57,6 +57,8 @@ int main()
         }
         cout << "\n";
     }
+
+    // free memory
     for (int i = 0; i < sche; i++)
     {
         delete arr[i];
